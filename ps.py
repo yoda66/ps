@@ -14,9 +14,8 @@ class PSArgs():
         self.run()
 
     def run(self):
-        print('[*] ---------------------------------------------')
-        print(f'[*] Processes, filter string [{Fore.CYAN}{self.procname}{Fore.RESET}]')
-        print('[*] ---------------------------------------------')
+        if self.procname:
+            print(f'[*] filtering on [{Fore.CYAN}{self.procname}{Fore.RESET}]')
         for p in psutil.process_iter(['pid', 'name', 'cmdline', 'memory_info']):
             try:
                 pid = p.info['pid']
@@ -75,6 +74,14 @@ class PSArgs():
 
 
 if __name__ == "__main__":
+    banner = f'''{Style.BRIGHT}
+[*] --------------------------------------
+[*]  ps.py, v1.0.1
+[*]  Author: Joff Thyer (c) 2024
+[*]  Black Hills Information Security LLC
+[*] --------------------------------------
+{Style.NORMAL}'''
+    print(banner)
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-n', '--procname', default='',
